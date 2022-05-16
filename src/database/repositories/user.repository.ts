@@ -45,9 +45,5 @@ export class UserRepository {
         return await this.userModel.findById({ _id: userId }).populate('follows')
     }
 
-    async likePost(likeDto: LikeDto, userId: string): Promise<User> {
-        const updated = await this.userModel.updateOne({ _id: userId }, { $addToSet: { likes: likeDto.post } })
-        return await this.userModel.findById({ _id: userId }).populate('likes')
-    }
 
 }

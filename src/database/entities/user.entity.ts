@@ -20,13 +20,8 @@ export class User extends Document {
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
     follows: string[]
 
-    @Prop()
-    comments: Comment[]
 
-    @Prop()
-    likes: Like[]
-
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PostClass' }] })
     posts: string[]
 
 

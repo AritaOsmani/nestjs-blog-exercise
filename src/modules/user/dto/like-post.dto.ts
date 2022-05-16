@@ -1,4 +1,4 @@
 
 export class LikeDto {
-    readonly post: string
+    readonly user: string
 }

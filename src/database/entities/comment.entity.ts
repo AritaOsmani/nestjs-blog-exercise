@@ -6,8 +6,8 @@ export class Comment extends Document {
     @Prop({ required: true })
     content: string
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
-    post: string
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    user: string
 
 }
 export const CommentSchema = SchemaFactory.createForClass(Comment)

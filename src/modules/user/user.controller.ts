@@ -40,11 +40,6 @@ export class UserController {
         return await this.userServise.followUser(req.user.id, followUser.followingId)
     }
 
-    //Not working, strictPopulate required somewhere
-    @Post('/like')
-    @UseGuards(AuthGuard())
-    async likePost(@Body() likeDto: LikeDto, @Req() request): Promise<User> {
-        return await this.userServise.likePost(likeDto, request.user.id)
-    }
+
 
 }

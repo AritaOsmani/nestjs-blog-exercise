@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { PostClass } from "../../database/entities/post.entity";
 import { CreatePostDto } from "./dto/create-post.dto";
+import { CheckIdPipe } from "./pipes/checkId.pipe";
 import { PostService } from "./post.service";
 
 
@@ -31,5 +32,17 @@ export class PostController {
         } else {
             return await this.postService.getAllPosts()
         }
+    }
+
+    @Get('/like/:id')
+    @UseGuards(AuthGuard())
+    async likePost(@Req() req, @Param('id', CheckIdPipe) id: string): Promise<PostClass> {
+        return await this.postService.likePost(req.user.id, id)
+    }
+
+    @Get('/dislike/:id')
+    @UseGuards(AuthGuard())
+    async dislikePost(@Req() req, @Param('id', CheckIdPipe) id: string): Promise<PostClass> {
+        return await this.postService.dislikePost(req.user.id, id)
     }
 }

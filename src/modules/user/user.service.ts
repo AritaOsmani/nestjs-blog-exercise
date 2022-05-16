@@ -59,21 +59,5 @@ export class UserService {
         }
     }
 
-    async likePost(likeDto: LikeDto, userId: string): Promise<User> {
-        //check if user exists:
-        const userMatch = (await this.userRepository.getUserById(userId)).populate('like')
-        if (userMatch) {
-            //check if post exists:
-            const postExists = await this.postRepository.getPostById(likeDto.post)
-            if (postExists) {
-                const likes = (await userMatch).likes
-                console.log('likes: ', likes)
-                return await this.userRepository.likePost(likeDto, userId)
-            } else {
-                throw new NotFoundException(`Post with given id: ${likeDto.post} not found!`)
-            }
-        } else {
-            throw new NotFoundException(`User with given id: ${userId} not found!`)
-        }
-    }
+
 }

@@ -4,9 +4,9 @@ import mongoose, { Document } from "mongoose";
 @Schema()
 export class Like extends Document {
     @Prop(
-        { type: mongoose.Schema.Types.ObjectId, ref: 'Post' }
+        { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
     )
-    post: string
+    user: string
 }
 
 export const LikeSchema = SchemaFactory.createForClass(Like)

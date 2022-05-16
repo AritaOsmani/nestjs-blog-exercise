@@ -46,4 +46,47 @@ export class PostService {
             throw new NotFoundException(`User with given id ${userId} not found!`)
         }
     }
+
+    async likePost(userId: string, postId: string): Promise<PostClass> {
+        //check the user id:
+        const userMatch = await this.userRepository.getUserById(userId)
+
+        if (userMatch) {
+            //check the post id:
+            const postMatch = await this.postRepository.getPostById(postId)
+
+            if (postMatch) {
+                //check if the post belongs to this user:
+                if (postMatch.user[0].toString() === userMatch._id.toString()) {
+
+                    throw new ConflictException(`You can't like your own post!`)
+                }
+
+                return await this.postRepository.likePost(userId, postId)
+            } else {
+                throw new NotFoundException(`Post with given id:${postId} not found!`)
+            }
+
+        } else {
+            throw new NotFoundException(`User with given id: ${userId} not found!`)
+        }
+    }
+
+    async dislikePost(userId: string, postId: string): Promise<PostClass> {
+        //check the user
+        const userMatch = await this.userRepository.getUserById(userId)
+        if (userMatch) {
+            //check the post
+            const postMatch = await this.postRepository.getPostById(postId)
+            if (postMatch) {
+                return await this.postRepository.dislikePost(userId, postId)
+
+            } else {
+                throw new NotFoundException(`Post with given id:${postId} not found!`)
+            }
+
+        } else {
+            throw new NotFoundException(`User with given id: ${userId} not found!`)
+        }
+    }
 }
