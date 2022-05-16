@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 
 @Schema()
-export class Like extends Document {
+export class Like {
     @Prop(
         { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
     )
