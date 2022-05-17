@@ -5,6 +5,7 @@ import { CreateUserDto } from "src/modules/user/dto/create-user.dto";
 import { User } from "../entities/user.entity";
 import * as bcrypt from 'bcrypt'
 import { LikeDto } from "src/modules/user/dto/like-post.dto";
+import { UpdateUserDto } from "src/modules/user/dto/update-user.dto";
 
 @Injectable()
 export class UserRepository {
@@ -45,5 +46,17 @@ export class UserRepository {
         return await this.userModel.findById({ _id: userId }).populate('follows')
     }
 
+    async deleteAccount(userId: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
+        const deleted = await this.userModel.deleteOne({ _id: userId })
+        console.log('deleted: ', deleted)
+        console.log(typeof deleted)
+        return deleted
+    }
+
+    async updateAccount(userId: string, updateUserDto: UpdateUserDto): Promise<User> {
+        const updated = await this.userModel.updateOne({ _id: userId }, { $set: { username: updateUserDto.username, email: updateUserDto.email, password: updateUserDto.password } })
+
+        return await this.userModel.findById({ _id: userId })
+    }
 
 }

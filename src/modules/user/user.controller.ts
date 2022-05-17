@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { User } from "../../database/entities/user.entity";
+import { CheckIdPipe } from "../post/pipes/checkId.pipe";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { FollowUserDto } from "./dto/follow-user.dto";
 import { LikeDto } from "./dto/like-post.dto";
 import { SignInCredentialsDto } from "./dto/signIn-credentials.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 import { AccessTokenInterface } from "./interfaces/accessToken.interface";
 import { UserService } from "./user.service";
 
@@ -40,6 +42,16 @@ export class UserController {
         return await this.userServise.followUser(req.user.id, followUser.followingId)
     }
 
+    @Delete('/delete')
+    @UseGuards(AuthGuard())
+    async deleteAccount(@Req() req): Promise<string> {
+        return await this.userServise.deleteAccount(req.user.id)
+    }
 
+    @Patch('/update')
+    @UseGuards(AuthGuard())
+    async updateAccount(@Body() updateUserDto: UpdateUserDto, @Req() req): Promise<User> {
+        return await this.userServise.updateAccount(req.user.id, updateUserDto)
+    }
 
 }
